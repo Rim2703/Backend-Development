@@ -1,4 +1,5 @@
 const express = require('express');
+// const underScore = require('underscore')
 
 const abc = require('./intro')
 const firstQue = require('../logger/logger.js')
@@ -13,10 +14,13 @@ router.get('/test-me', function (req, res) {
     secondQue.month()
     secondQue.info()
     thirdQue.mystr("     JavaScipt    and    Nodejs    ")
-    thirdQue.lower("BACKEND DEVELOPMENT")
-    thirdQue.upper("functionup plutonium batch")
+    // thirdQue.mystr()
+    // thirdQue.lower("BACKEND DEVELOPMENT")
+    thirdQue.lowerModule() 
+    // thirdQue.upper("functionup plutonium batch")
+    thirdQue.upperModule()
     
-    res.send('My first ever api! I will Create it.')
+    res.send('<h1>My first ever api! I will Create it.</h1>')
 });
 
 router.get('/test-you',function (req,res){
