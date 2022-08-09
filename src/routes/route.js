@@ -17,21 +17,22 @@ router.get('/movies', function (req, res) {
     res.send(movies)
 
 })
-router.get('/movies/:indexNumber', function (req, res) {
-    let movies = ['Rang de basanti', 'The shining', 'Lord of the rings', 'Batman begins']
-    let value = req.params.indexNumber
-    res.send(movies[value])
-})
+
+// router.get('/movies/:indexNumber', function (req, res) {
+//     let movies = ['Rang de basanti', 'The shining', 'Lord of the rings', 'Batman begins']
+//     let value = req.params.indexNumber
+//     res.send(movies[value])
+// })
 
 router.get('/movies/:indexNumber', function (req, res) {
     let movies = ['Rang de basanti', 'The shining', 'Lord of the rings', 'Batman begins']
-    // let value = req.params.indexNumber
-    let value = req.params.filmId
-    if (value > movies.length) {
-        res.send(arr[value])
+        let count = req.params.indexNumber
+    if ((count < 0) || (count > movies.length)) {
+        console.log("Please insert valid index")
+        res.send('Please enter correct index Number')
     }
     else {
-        res.send('No movie exists with this id')
+        res.send(movies[count])
     }
 })
 
@@ -66,14 +67,18 @@ router.get('/films/:filmId', function (req, res) {
         'id': 4,
         'name': 'Finding Nemo'
     }]
-    let value = req.params.filmId
-    if (value < arr.length) {
-        res.send(arr[value])
-    }
-    else {
-        res.send('No movie exists with this id')
-    }
 
+    let value = req.params.filmId
+    const result = function(){
+        for(let i=0; i<arr.length;i++){
+            const obj =arr[i]
+            if(obj['id']==value){
+                return res.send(obj)
+            }
+        }
+        return res.send("No Such Film exists with this id")
+    }
+    result();
 })
 
 router.get('/student-details/:name', function (req, res) {
