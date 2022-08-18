@@ -7,7 +7,7 @@ const bookSchema = new mongoose.Schema( {
     
     isPublished: Boolean,
     prices: {
-        indianPrice: String,
+        indianPrice: String,  
         europePrice: String,
     },
     sales: {type: Number, default: 10},
