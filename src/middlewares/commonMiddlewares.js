@@ -1,3 +1,6 @@
+const { isValidObjectId } = require("mongoose")
+const productModel = require("../models/productModel")
+const userModel = require("../models/userModel")
 
 const mid1= function ( req, res, next) {
     req.falana= "hi there. i am adding something new to the req object"
@@ -5,22 +8,49 @@ const mid1= function ( req, res, next) {
     next()
 }
 
-const mid2= function ( req, res, next) {
-    console.log("Hi I am a middleware named Mid2")
+const validation1= function ( req, res, next) {
+    let data = req.headers
+    let validate = data.isfreeappuser
+    if(!validate){
+        return res.send({msg: "The request is missing a mandatory header"})
+     }
     next()
 }
 
-const mid3= function ( req, res, next) {
-    console.log("Hi I am a middleware named Mid3")
+const isFreeAppUser = async function(req,res,next){
+    let bool = req.headers["isfreeappuser"]
+    if(bool != "true" && bool != "false"){
+        return res.send("Header Must be in Beelean")
+    }
     next()
 }
 
-const mid4= function ( req, res, next) {
-    console.log("Hi I am a middleware named Mid4")
-    next()
+const validation2= async function ( req, res, next) {
+    let data = req.body
+    let userId = data.userId
+    let productId = data.productId
+    
+    let finduser = await userModel.findById(userId)
+    let findproduct = await productModel.findById(productId)
+    if(!userId){
+        return res.send({msg: "User Id is required"})
+    }
+    else if(!finduser){
+        return  res.send({msg: "Please enter valid User Id"})
+      }
+
+    if(!productId){
+        return res.send({msg: "Product Id is required"})
+    }
+    else if(!findproduct){
+        return  res.send({msg: "Please enter valid Product Id"})
+        }
+     next()
+    
 }
+
 
 module.exports.mid1= mid1
-module.exports.mid2= mid2
-module.exports.mid3= mid3
-module.exports.mid4= mid4
+module.exports.validation1= validation1
+module.exports.validation2= validation2
+module.exports.isFreeAppUser = isFreeAppUser
