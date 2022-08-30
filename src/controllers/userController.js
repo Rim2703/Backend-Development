@@ -63,19 +63,23 @@ const updateUser = async function (req, res) {
 
 const deleteUser = async function (req, res) {
   let userId = req.params.userId;
+  let user = await userModel.findById(userId);
+  if (!user) {
+    return res.send("No such user exists");
+  }
   let updatedUser = await userModel.findByIdAndUpdate({ _id: userId }, {isDeleted: true}, {new: true});
-  res.send({ status: updatedUser, data: updatedUser });
+  res.send({ status: true, data: updatedUser });
 };
 
 const postMessage = async function (req, res) {
     let message = req.body.message
     //userId for which the request is made. In this case message to be posted.
-    let userToBeModified = req.params.userId
+    // let userToBeModified = req.params.userId
     //userId for the logged-in user
-    let userLoggedIn = decodedToken.userId
+    // let userLoggedIn = decodedToken.userId
 
-    //userId comparision to check if the logged-in user is requesting for their own data
-    if(userToBeModified != userLoggedIn) return res.send({status: false, msg: 'User logged is not allowed to modify the requested users data'})
+    // //userId comparision to check if the logged-in user is requesting for their own data
+    // if(userToBeModified != userLoggedIn) return res.send({status: false, msg: 'User logged is not allowed to modify the requested users data'})
 
     let user = await userModel.findById(req.params.userId)
     if(!user) return res.send({status: false, msg: 'No such user exists'})
@@ -93,5 +97,5 @@ module.exports.createUser = createUser;
 module.exports.getUserData = getUserData;
 module.exports.updateUser = updateUser;
 module.exports.loginUser = loginUser;
-module.exports.deleteUser = deleteUser;
+module.exports.deleteUser = deleteUser
 module.exports.postMessage = postMessage
