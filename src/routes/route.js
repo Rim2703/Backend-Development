@@ -18,7 +18,7 @@ router.get('/test-me', function (req, res) {
     thirdQue.upper("functionup plutonium batch")
     
     // first Question
-    let arr = ['january', 'february', 'march', 'april', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
+    let arr = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
     let a = lodash.chunk(arr, 4)
     console.log(a)
     
@@ -48,4 +48,3 @@ router.get('/test-you', function (req, res) {
 });
 
 module.exports = router;
-// adding this comment for no reason
